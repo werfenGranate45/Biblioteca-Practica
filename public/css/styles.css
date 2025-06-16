@@ -1,0 +1,28 @@
+/*Se le aplica a las clases como .clase que se especifican en el HTML*/
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+    
+.box-login {
+    width: 500px;
+    height: 200px;
+    background-color: lightblue;
+    border: 2px solid blue;
+    padding: 10px;
+    margin: 10px;
+}
+
+body {
+    background-image: url('../images/cps.webp');
+    background-size: cover;
+    background-position-x: left;
+    background-position-y:top;
+    background-repeat: repeat-x;
+    background-attachment: local;
+    min-height: 50px;
+    margin: 0;
+    /*background-color: blue;*/
+}
