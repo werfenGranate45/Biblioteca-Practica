@@ -26,7 +26,6 @@ class AuthMiddleware
             return $next($request);   
         }
 
-        return redirect()->to('')
-                         ->with(['message' => "No tiene acceso a esta vista"]);
+        return back()->with(['message' => "No tiene acceso a esta vista"]);
     }
 }

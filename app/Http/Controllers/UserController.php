@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use app\Utils;
+use app\Utils\MessageUtils;
 
 class UserController extends Controller
 {
@@ -30,15 +31,24 @@ class UserController extends Controller
          *  Tiene  que tener la mismas nombre que las credenciales que obtuvimos 
          * con el request->only 
          */
-        $result = Validator::make($data_user, [
+        $rules =  [
             'email'    => 'required|email|max:100',
             'password' => 'required|min:6|max:20'
+        ];
+
+        $result = Validator::make($data_user, $rules, [
+             'required' => 'El :attribute es requerido.',
+             'max'      => 'The :attribute tiene como maximo :size'
         ]);
 
         #Esto por si nos pasa las validaciones
         #El metodo back redirecciona al previo
+        #Esto es un aviso por ende hay que avisar
+        #Y este es mas un error
         if($result->fails()){
-            return back();
+            return back()->
+            withInput()->
+            withErrors(['error' =>  MessageUtils::MSG_ERROR_LOG]);
         }
         
         if(auth()->guard()->attempt($data_user)){
@@ -46,7 +56,8 @@ class UserController extends Controller
             return redirect()->to('admin');
         }
         
-        return back();
+        #Este es mas un aviso
+        return back()->with(['message' => MessageUtils::MSG_ALERT_LOG]);
     }
 
     #Esta es la ruta en la que se va mostrar el form

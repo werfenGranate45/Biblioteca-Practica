@@ -25,6 +25,9 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('store',[UserController::class, 'register']);    
 });
 
+Route::get('register', function() {
+    return view('register');
+});
 /*
 #Agregar un Middleware
 Route::group(['prefix' => 'empleado'], function(){
